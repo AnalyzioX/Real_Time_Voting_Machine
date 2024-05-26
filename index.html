@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        async function
+    submitVote(candidate) {
+        const response = await
+    fetch('/vote1',{
+        method: 'POST',
+        headers:{
+            'content-type':'application/json'
+        },
+        body: 
+        JSON.stringify({candidate:candidate})
+    });
+    const result = await response.json();
+    alert(result.message || result.error);
+    }
+    async function loadResults(){
+        const response = await fetch('/results');
+        const results = await response.json();
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = '';
+        results.forEach(results => {
+            const div = document.createElement('div');
+            div.textContent = '${result.candidate}: ${result.votes1}votes1';
+            resultsContainer.appendChild(div);
+        });
+    }
+    document.addEventListener('DOMContentLoaded',loadResults);
+</script>
+</head>
+<body>
+    <h1>Vote for Your candidate</h1>
+    <button onclick="SubmitVote ('Candidate 1')">Vote for Candidate 1</button>
+    <button onclick="SubmitVote ('Candidate 2')">Vote for Candidate 2</button>
+    <button onclick="SubmitVote ('Candidate 3')">Vote for Candidate 3</button>
+     <h2>Results</h2>
+     <div id="results"></div>
+</body>
+</html>
